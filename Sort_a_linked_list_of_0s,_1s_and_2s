@@ -1,0 +1,78 @@
+class Solution {
+  public:
+    Node* segregate(Node* head) {
+        // code here
+       Node *zero = NULL;
+       Node *one = NULL;
+       Node *two = NULL;
+       Node *zerohead = NULL;
+       Node *onehead = NULL;
+       Node *twohead= NULL;
+       Node *travel = head;
+       while(travel!=NULL){
+           if(travel->data == 0){
+               if(zero == NULL){
+                   zero = travel;
+                   zerohead = travel;
+               }
+               else{
+                   zero->next = travel;
+                   zero = zero->next;
+               }
+           }
+           else if(travel->data == 1){
+               if(one == NULL){
+                   one = travel;
+                   onehead = travel;
+               }
+               else{
+                   one->next = travel;
+                   one = one->next;
+               }
+           }
+           else{
+               if(two == NULL){
+                   two = travel;
+                   twohead = travel;
+               }
+               else{
+                   two->next = travel;
+                   two = two->next;
+               }
+           }
+           travel = travel->next;
+       }
+       if(zero && one && two){
+           zero->next = onehead;
+           one->next = twohead;
+           two->next = NULL;
+           return zerohead;
+       }
+       else if(!zero && one && two){
+           one->next = twohead;
+           two->next = NULL;
+           return onehead;
+       }
+       else if(zero && !one && two){
+           zero->next = twohead;
+           two->next = NULL;
+           return zerohead;
+       }
+       else if(zero && one && !two){
+           zero->next = onehead;
+           one->next = NULL;
+           return zerohead;
+       }
+       else if(zero && !one && !two){
+           return zerohead;
+       }
+       else if(!zero && one && !two){
+           return onehead;
+       }
+       else{
+           return twohead;
+       }
+       return NULL;
+       
+    }
+};
