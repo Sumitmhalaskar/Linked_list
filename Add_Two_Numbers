@@ -1,0 +1,70 @@
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode *temp1 = l1;
+        ListNode *temp2 = l2;
+        ListNode *head = NULL;
+        ListNode *prev = NULL;
+        int num = 0;
+        while(temp1!=NULL && temp2!=NULL){
+            num = num + temp1->val + temp2->val;
+            int x = num%10;
+            num/=10;
+            if(head == NULL){
+                ListNode *temp = new ListNode(x);
+                head = temp;
+                prev = temp;
+            }
+            else{
+                ListNode *temp = new ListNode(x);
+                prev->next = temp;
+                prev = prev->next;
+            }
+            temp1 = temp1->next;
+            temp2 = temp2->next;
+        }
+        while(temp1 == NULL && temp2!=NULL){
+            if(num>0){
+                num+=temp2->val;
+                int x = num%10;
+                num/=10;
+                ListNode *temp = new ListNode(x);
+                prev->next = temp;
+                prev = prev->next;
+                temp2 = temp2->next;
+            }
+            else{
+                ListNode *temp = new ListNode(temp2->val);
+                prev->next = temp;
+                prev = prev->next;
+                temp2 = temp2->next;
+            }
+        }
+         while(temp1 != NULL && temp2==NULL){
+            if(num>0){
+                num+=temp1->val;
+                int x = num%10;
+                num/=10;
+                ListNode *temp = new ListNode(x);
+                prev->next = temp;
+                prev = prev->next;
+                temp1 = temp1->next;
+            }
+            else{
+                ListNode *temp = new ListNode(temp1->val);
+                prev->next = temp;
+                prev = prev->next;
+                temp1 = temp1->next;
+            }
+        }
+         if(temp1 == NULL && temp2 == NULL){
+            if(num>0){
+                ListNode *temp = new ListNode(num);
+                prev->next = temp;
+                return head;
+            }
+            // return head;
+        }
+        return head;
+    }
+};
