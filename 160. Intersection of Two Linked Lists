@@ -1,0 +1,18 @@
+ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        ListNode *temp1 = headA;
+        ListNode *temp2 = headB;
+        bool temp1_done = false;
+        bool temp2_done = false;
+        unordered_map<ListNode*, bool> visited;
+        while(temp1){
+           visited[temp1] = true;
+           temp1 = temp1->next;
+        }
+        while(temp2){
+            if(visited[temp2]){
+                return temp2;
+            }
+            temp2 = temp2->next;
+        }
+        return NULL;
+    }
