@@ -1,0 +1,57 @@
+/*
+class Node {
+ public:
+    int data;
+    Node *next;
+
+    Node(int x) {
+        data = x;
+        next = NULL;
+    }
+};
+*/
+
+class Solution {
+  public:
+    int lengthOfLoop(Node *head) {
+        // code here
+        if(head == NULL || head->next == NULL){
+            return 0;
+        }
+        Node *slow = head;
+        Node *fast = head;
+        int count = 0;
+        while(fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+            count++;
+            if(slow == fast){
+              
+                break;
+            }
+        }
+        if(fast == NULL || fast->next == NULL){
+            return 0;
+        }
+        fast = head;
+        Node *temp = slow;
+        
+        int temp_count = 0;
+        int fast_count = 0;
+        while(true){
+            if(temp == fast){
+                break;
+            }
+            temp = temp->next;
+            fast = fast->next;
+            temp_count++;
+            fast_count++;
+            if(temp == slow && temp!=fast){
+                temp_count = 0;
+            }
+            
+        }
+        count+=temp_count;
+        return count - fast_count;
+    }
+};
