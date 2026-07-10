@@ -1,0 +1,51 @@
+/* Structure of a Linked List node
+class Node {
+  public:
+    int data;
+    Node* next;
+
+    Node(int x) {
+        data = x;
+        next = nullptr;
+    }
+};
+*/
+class Solution {
+  public:
+    Node *compute(Node *head) {
+        // code here
+        if(head == NULL || head->next ==NULL){
+            return NULL;
+        }
+       stack<int>st;
+       Node *temp = head;
+       while(temp!=NULL){
+           if(st.empty()){
+               st.push(temp->data);
+               temp = temp->next;
+           }
+           else{
+               if(temp->data>st.top()){
+                   while(!st.empty()&&temp->data>st.top()){
+                       st.pop();
+                   }
+                   st.push(temp->data);
+                   temp = temp->next;
+               }
+               else{
+                   st.push(temp->data);
+                   temp = temp->next;
+               }
+           }
+       }
+       Node *newhead = NULL;
+    //   Node *local = NULL;
+       while(!st.empty()){
+           Node *temp = new Node(st.top());
+           temp->next = newhead;
+           newhead = temp;
+           st.pop();
+       }
+       return newhead;
+    }
+};
